@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 
 function Footer() {
   return (
-    <div className="footer-middle py-5">
+    <div className="footer py-5">
       <div className="container">
         <div className="row justify-content-lg-around">
           <div className="col-md-3 mb-2 col-sm-12">

@@ -4,6 +4,7 @@
   background-color: #fff;
 }
 
+
 .navbar .nav-link {
   color: #393e46;
   font-weight: bold;
@@ -113,46 +114,54 @@
   border-radius: 8px;
 }
 
-.login {
-  width: 400px;
-  height: min-content;
-  padding: 20px;
+.user {
+  margin-top: 120px;
+  margin-bottom: 135px;
+  height: max-content;
+}
+
+.user-container {
+  width: 350px;
+  height: max-content;
   border-radius: 12px;
   background-color: #f2df3a;
-  margin: 50px auto;
+  margin: 0 auto;
   color: #393e46;
+  padding: 10px;
   font-weight: bold;
 }
 
-.login form {
-  font-size: 20px;
-}
 
-.footer-middle {
+.footer {
   background-color: #fff;
   box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.2);
 }
-@media screen and (min-width: 650px) {
-}
+
+
+@media screen and (min-width: 650px) {}
 
 @media (min-width: 320px) {
   .detail-page .detail-page__image {
     background-color: #ededed;
   }
+
   .detail-page .detail-page__button {
     background-color: #f2df3a;
     border: 3px solid #f2df3a;
     font-weight: bold;
     font-size: 18px;
   }
+
   .detail-page .detail-page__button:hover {
     color: rgb(0, 0, 0);
     background-color: transparent;
     border: 3px solid #f2df3a;
   }
+
   .detail-page ul li {
     list-style: none;
   }
+
   .webinar-page .kategori-list,
   .podcast-page .kategori-list {
     flex-wrap: wrap;

@@ -109,79 +109,85 @@ const Profile = () => {
   }, [user, loading]);
 
   return (
-    <div>
-      Profile
-      <p>Nama: {profile.name}</p>
-      <p>Email: {profile.email}</p>
-      <img src={profile.profile_image} />
-      <button
-        type="button"
-        className="btn btn-primary"
-        data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
-      >
-        Ubah profil
-      </button>
-      <div
-        className="modal fade"
-        id="exampleModal"
-        tabIndex="-1"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h1 className="modal-title fs-5" id="exampleModalLabel">
-                Ubah Profil
-              </h1>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div className="modal-body">
-              <form onSubmit={handleUbahProfil}>
-                <label htmlFor="name" className="form-label">
-                  Nama
-                </label>
-                <input
-                  className="form-control"
-                  name="name"
-                  onChange={handleChange}
-                  value={input.name}
-                  type="name"
-                  placeholder="Nama"
-                />
-                <label htmlFor="profile_image" className="form-label">
-                  Link foto profil
-                </label>
-                <textarea
-                  className="form-control"
-                  name="profile_image"
-                  onChange={handleChange}
-                  value={input.profile_image}
-                  type="profile_image"
-                  placeholder="profile_image"
-                />
+    <div className='user py-4'>
+      <div className='user-container bg-transparent card shadow p-3'>
+        <div className='text-center mb-5'>
+          <h2 className='mb-4'>Profile</h2>
+          <img src={profile.profile_image} width="100" />
+        </div>
+        <h4>Nama: {profile.name}</h4>
+        <h4>Email: {profile.email}</h4>
+        <div className='text-end'>
+          <button
+            type="button"
+            className="btn btn-warning ms-2"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+          >
+            Ubah profil
+          </button>
+        </div>
+        <div
+          className="modal fade"
+          id="exampleModal"
+          tabIndex="-1"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h1 className="modal-title fs-5" id="exampleModalLabel">
+                  Ubah Profil
+                </h1>
                 <button
-                  type="submit"
-                  className="btn btn-primary rounded-pill float-end mt-3"
+                  type="button"
+                  className="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div className="modal-body">
+                <form onSubmit={handleUbahProfil}>
+                  <label htmlFor="name" className="form-label">
+                    Nama
+                  </label>
+                  <input
+                    className="form-control"
+                    name="name"
+                    onChange={handleChange}
+                    value={input.name}
+                    type="name"
+                    placeholder="Nama"
+                  />
+                  <label htmlFor="profile_image" className="form-label">
+                    Link foto profil
+                  </label>
+                  <textarea
+                    className="form-control"
+                    name="profile_image"
+                    onChange={handleChange}
+                    value={input.profile_image}
+                    type="profile_image"
+                    placeholder="profile_image"
+                  />
+                  <button
+                    type="submit"
+                    className="btn btn-primary rounded-pill float-end mt-3"
+                  >
+                    Simpan
+                  </button>
+                </form>
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn rounded-pill btn-secondary"
+                  data-bs-dismiss="modal"
                 >
-                  Simpan
+                  Tutup
                 </button>
-              </form>
-            </div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn rounded-pill btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Tutup
-              </button>
+              </div>
             </div>
           </div>
         </div>

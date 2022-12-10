@@ -1,7 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
+
 .App {
   font-family: Roboto;
   color: #393e46;
+  box-sizing: border-box;
 }
 
 .icon-button {
@@ -53,6 +55,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -110,6 +113,7 @@
 .img-hero:hover {
   transform: scale(1.1);
 }
+
 /* .sticky-col {
   position: -webkit-sticky;
   position: sticky;
