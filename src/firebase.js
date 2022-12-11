@@ -1,8 +1,8 @@
 /* eslint-disable no-undef */
 // Import the functions you need from the SDKs you need
-
+import { useNavigate } from 'react-router-dom';
 import { initializeApp } from 'firebase/app';
-
+import Swal from 'sweetalert2';
 import { getAnalytics } from 'firebase/analytics';
 import {
   getFirestore,
@@ -11,6 +11,10 @@ import {
   collection,
   where,
   addDoc,
+  orderBy,
+  onSnapshot,
+  doc,
+  setDoc,
 } from 'firebase/firestore';
 import {
   getAuth,
@@ -60,31 +64,49 @@ const registerWithEmailAndPassword = async (
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
     const user = res.user;
-    // console.log(user);
-    // console.log(user.accessToken);
-    // console.log(user.uid);
-    await addDoc(collection(db, 'users'), {
+
+    await setDoc(doc(db, 'users', user.uid), {
       uid: user.uid,
       name,
       profile_image,
       authProvider: 'local',
       email,
+      created: new Date(),
     });
+
     Cookies.set('token', user.accessToken, { expires: 1 });
     Cookies.set('user', JSON.stringify(user), { expires: 1 });
     return user;
   } catch (err) {
-    console.error(err);
-    alert(err.message);
+    Swal.fire({
+      title: 'Error!',
+      text: err.message,
+      icon: 'error',
+      confirmButtonText: 'OK',
+    });
+    setTimeout(() => {
+      window.location.href = '/register';
+    }, '2000');
   }
 };
 
 const logInWithEmailAndPassword = async (email, password) => {
   try {
-    await signInWithEmailAndPassword(auth, email, password);
+    const res = await signInWithEmailAndPassword(auth, email, password);
+    const user = res.user;
+    Cookies.set('token', user.accessToken, { expires: 1 });
+    Cookies.set('user', JSON.stringify(user), { expires: 1 });
+    return user;
   } catch (err) {
-    console.error(err);
-    alert(err.message);
+    Swal.fire({
+      title: 'Error!',
+      text: err.message,
+      icon: 'error',
+      confirmButtonText: 'OK',
+    });
+    setTimeout(() => {
+      window.location.href = '/login';
+    }, '2000');
   }
 };
 

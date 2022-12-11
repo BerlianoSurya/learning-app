@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie';
 import React from 'react';
 import { Navigate } from 'react-router-dom';
-import AdminLoginPage from '../pages/adminLogin';
+import Swal from 'sweetalert2';
 
 const AdminRoute = (props) => {
   if (Cookies.get('token') !== undefined && Cookies.get('user') !== undefined) {
@@ -9,7 +9,13 @@ const AdminRoute = (props) => {
     return <Navigate to={'/'} />;
   } else {
     if (Cookies.get('admin') === undefined) {
-      window.alert('Anda belum login!');
+      Swal.fire({
+        title: 'Anda Belum Login Sebagai Admin!',
+        text: 'Silahkan login terlebih dahulu',
+        icon: 'error',
+        confirmButtonText: 'OK',
+        allowOutsideClick: false,
+      });
       return <Navigate to={'/adminLogin'} />;
     } else if (Cookies.get('admin') !== undefined) {
       return props.children;

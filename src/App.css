@@ -1,5 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
+
 .App {
-  text-align: center;
+  font-family: Roboto;
+  color: #393e46;
+  box-sizing: border-box;
+}
+
+.icon-button {
+  font-size: 50px;
+}
+
+.icon-kategori {
+  color: #dc3545;
+}
+
+.App a {
+  color: #393e46;
+  text-decoration: none;
+}
+
+.App a:hover {
+  color: #737880;
+  cursor: pointer;
+}
+
+.App p {
+  font-size: 16px;
+  line-height: 1.5;
 }
 
 .App-logo {
@@ -24,14 +51,11 @@
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -49,6 +73,45 @@
 .table-data table th:first-child {
   position: sticky;
   left: 0;
+}
+
+.page-404 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 100vh;
+}
+
+.card-home-admin {
+  min-height: 250px;
+}
+
+.icon-font {
+  font-size: 1.4rem;
+}
+
+.icon-font:hover {
+  color: #dfdfdf;
+}
+
+.profile-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.redirect-btn {
+  background-color: transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+}
+
+.img-hero:hover {
+  transform: scale(1.1);
 }
 
 /* .sticky-col {

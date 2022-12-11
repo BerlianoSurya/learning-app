@@ -1,31 +1,20 @@
 import axios from 'axios';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { GlobalContext } from '../context/GlobalContext';
-import { useNavigate, Link, useParams } from 'react-router-dom';
-import { Card, Row, Col, Container, Button } from 'react-bootstrap';
+import { useParams } from 'react-router-dom';
 import Kategori from '../kategori.json';
 
 const AdminAddDataWebinar = () => {
   let { IdData } = useParams();
   const { contextState, contextFunctions } = useContext(GlobalContext);
-  const {
-    arrayWebinar,
-    inputWebinar,
-    setInputWebinar,
-    fetchStatus,
-    setFetchStatus,
-  } = contextState;
+  const { arrayWebinar, inputWebinar, setInputWebinar } = contextState;
   const { handleChangeWebinar, handleSubmitWebinar } = contextFunctions;
 
-  console.log(Kategori);
-
   useEffect(() => {
-    console.log(IdData);
     if (IdData !== undefined) {
       axios
-        .get(`https://webinar-server-app.herokuapp.com/webinar/${IdData}`)
+        .get(`https://webinar-server-new.herokuapp.com/webinar/${IdData}`)
         .then((response) => {
-          console.log(response);
           setInputWebinar({
             judul: response.data.judul,
             sumber: response.data.sumber,
@@ -37,14 +26,15 @@ const AdminAddDataWebinar = () => {
             kategori: response.data.kategori,
             tanggal: response.data.tanggal,
             waktu: response.data.waktu,
+            like: response.data.like,
           });
         });
     }
   }, []);
   return (
     <div className="home container-fluid">
-      <div className="">
-        <p>Admin Input Data</p>
+      <div className="container">
+        <h2 className='text-center'>Admin Input Data</h2>
         <form onSubmit={handleSubmitWebinar} className="row g-3">
           <div className="col-12">
             <label htmlFor="judul" className="form-label">
@@ -138,7 +128,7 @@ const AdminAddDataWebinar = () => {
 
           <div className=" col-12">
             <label htmlFor="image" className="form-label">
-              Link foto(link)
+              Link Foto
             </label>
             <input
               type="text"
@@ -159,7 +149,7 @@ const AdminAddDataWebinar = () => {
               name="kategori"
               onChange={handleChangeWebinar}
               value={inputWebinar.kategori}
-              class="form-control"
+              className="form-control"
             >
               {Kategori.map((e, key) => {
                 return (
@@ -191,7 +181,7 @@ const AdminAddDataWebinar = () => {
               Tanggal
             </label>
             <input
-              type="text"
+              type="date"
               className="form-control"
               id="tanggal"
               onChange={handleChangeWebinar}

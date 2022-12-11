@@ -8,22 +8,22 @@ import WebinarData from '../pages/webinarData';
 import PodcastData from '../pages/podcastData';
 import AdminAddDataWebinar from '../pages/adminAddDataWebinar';
 import AdminAddDataPodcast from '../pages/adminAddDataPodcast';
-// import Layout from '../components/Layout';
-// import LoginRoute from '../components/LoginRoute';
+import LikedWebinar from '../pages/LikedWebinar';
+import DetailSchedule from '../components/DetailSchedule';
+import DetailPodcast from '../components/DetailPodcast';
 import RegisterRoute from '../components/registerRoute';
 import AdminLoginRoute from '../components/adminLoginRoute';
 import AdminRoute from '../components/adminRoute';
 import AdminLayout from '../components/adminLayout';
-// import LayoutDashboard from '../components/LayoutDashboard';
-// import DataTable from '../components/DataTable';
-// import DataForm from '../components/DataForm';
-// import Profile from '../components/Profile';
-// import ChangePass from '../components/ChangePass';
-// import Navbar from '../components/Navbar';
-// import Dashboard from '../pages/Dashboard';
-// import DashboardRoute from '../components/DashboardRoute';
-// import DetailPage from '../pages/DetailPage';
-// import Page404 from '../components/Page404';
+import Webinar from '../components/Webinar';
+import Podcast from '../components/Podcast';
+import LoginRoute from '../components/LoginRoute';
+import RegulerUserRoute from '../components/regUserRoute';
+import Profile from '../pages/Profile';
+import LikedPodcast from '../pages/LikedPodcast';
+import Page404 from '../components/Page404';
+import Navigation from '../components/Navigation';
+import Footer from '../components/Footer';
 
 const Routers = () => {
   return (
@@ -31,25 +31,101 @@ const Routers = () => {
       <BrowserRouter>
         <GlobalProvider>
           <Routes>
-            {/* <Route path="*" element={<Page404 />} /> */}
+            <Route path="*" element={<Page404 />} />
             <Route
               path="/"
               element={
                 // <Layout>
-                <Home />
+                <>
+                  <Navigation />
+                  <Home />
+                  <Footer />
+                </>
                 // </Layout>
               }
             />
-            {/* <Route
-              path="/job/:id"
+            <Route
+              path="/webinar"
               element={
-                <Layout>
-                  <DetailPage />
-                </Layout>
+                // <Layout>
+                <>
+                  <Navigation />
+                  <Webinar />
+                  <Footer />
+                </>
+                // </Layout>
               }
-            /> */}
+            />
+            <Route
+              path="/webinar/:id"
+              element={
+                // <Layout>
+                <>
+                  <Navigation />
+                  <DetailSchedule />
+                  <Footer />
+                </>
+                // </Layout>
+              }
+            />
+            <Route
+              path="/podcast"
+              element={
+                // <Layout>
+                <>
+                  <Navigation />
+                  <Podcast />
+                  <Footer />
+                </>
+                // </Layout>
+              }
+            />
+            <Route
+              path="/podcast/:id"
+              element={
+                // <Layout>
+                <>
+                  <Navigation />
+                  <DetailPodcast />
+                  <Footer />
+                </>
+                // </Layout>
+              }
+            />
             {/* <Route path="/login" element={<LoginRoute />} /> */}
+
             <Route path="/register" element={<RegisterRoute />} />
+            <Route path="/login" element={<LoginRoute />} />
+            <Route
+              path="/profile"
+              element={
+                <RegulerUserRoute>
+                  <Navigation />
+                  <Profile />
+                  <Footer />
+                </RegulerUserRoute>
+              }
+            />
+            <Route
+              path="/webinar-disukai"
+              element={
+                <RegulerUserRoute>
+                  <Navigation />
+                  <LikedWebinar />
+                  <Footer />
+                </RegulerUserRoute>
+              }
+            />
+            <Route
+              path="/podcast-disukai"
+              element={
+                <RegulerUserRoute>
+                  <Navigation />
+                  <LikedPodcast />
+                  <Footer />
+                </RegulerUserRoute>
+              }
+            />
             <Route path="/adminLogin" element={<AdminLoginRoute />} />
             <Route
               path="/admin/adminDashboard"

@@ -2,11 +2,24 @@ import React, { createContext, useState } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
+import { db } from '../firebase';
+import {
+  query,
+  collection,
+  getDocs,
+  where,
+  doc,
+  updateDoc,
+} from 'firebase/firestore';
+import Swal from 'sweetalert2';
+
 export const GlobalContext = createContext();
 
 export const GlobalProvider = (props) => {
   let navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [fetchStatus, setFetchStatus] = useState(true);
+  const [profile, setProfile] = useState([]);
   const [fetchStatusPodcast, setFetchStatusPodcast] = useState(true);
   const [arrayWebinar, setArrayWebinar] = useState([]);
   const [arrayPodcast, setArrayPodcast] = useState([]);
@@ -22,6 +35,7 @@ export const GlobalProvider = (props) => {
     kategori: '',
     tanggal: '',
     waktu: '',
+    like: [],
   });
   const [inputPodcast, setInputPodcast] = useState({
     judul: '',
@@ -31,33 +45,41 @@ export const GlobalProvider = (props) => {
     link: '',
     image: '',
     kategori: '',
+    like: [],
   });
 
   const renderDataWebinar = () => {
     axios
-      .get('https://webinar-server-app.herokuapp.com/webinar')
+      .get('https://webinar-server-new.herokuapp.com/webinar')
       .then((res) => {
         const tempArr = res.data.map((el) => {
-          //   console.log(el);
           return el;
         });
         setArrayWebinar(tempArr);
-        // console.log(res);
       })
       .catch((e) => console.log(e));
+
     setFetchStatus(false);
+  };
+
+  const getUID = () => {
+    if (Cookies.get('user') == undefined) {
+      return null;
+    } else {
+      const userLocal = JSON.parse(Cookies.get('user'));
+      const localUID = userLocal.uid;
+      return localUID;
+    }
   };
 
   const renderDataPodcast = () => {
     axios
-      .get('https://webinar-server-app.herokuapp.com/podcast')
+      .get('https://webinar-server-new.herokuapp.com/podcast')
       .then((res) => {
         const tempArr = res.data.map((el) => {
-          //   console.log(el);
           return el;
         });
         setArrayPodcast(tempArr);
-        // console.log(res);
       })
       .catch((e) => console.log(e));
     setFetchStatusPodcast(false);
@@ -90,12 +112,12 @@ export const GlobalProvider = (props) => {
       kategori,
       tanggal,
       waktu,
+      like,
     } = inputWebinar;
-    console.log(inputWebinar);
 
     if (currentId === -1) {
       axios
-        .post('https://webinar-server-app.herokuapp.com/webinar', {
+        .post('https://webinar-server-new.herokuapp.com/webinar', {
           judul,
           sumber,
           narasumber,
@@ -104,17 +126,17 @@ export const GlobalProvider = (props) => {
           link_daftar,
           image,
           kategori,
-          tanggal,
+          tanggal: showLocalDate(tanggal),
           waktu,
+          like,
         })
         .then((response) => {
-          console.log(response);
           setFetchStatus(true);
           navigate('/admin/dataWebinar');
         });
     } else {
       axios
-        .put(`https://webinar-server-app.herokuapp.com/webinar/${currentId}`, {
+        .put(`https://webinar-server-new.herokuapp.com/webinar/${currentId}`, {
           judul,
           sumber,
           narasumber,
@@ -123,11 +145,11 @@ export const GlobalProvider = (props) => {
           link_daftar,
           image,
           kategori,
-          tanggal,
+          tanggal: showLocalDate(tanggal),
           waktu,
+          like,
         })
         .then((response) => {
-          console.log(response);
           setFetchStatus(true);
           navigate('/admin/dataWebinar');
         });
@@ -144,17 +166,18 @@ export const GlobalProvider = (props) => {
       kategori: '',
       tanggal: '',
       waktu: '',
+      like: [],
     });
   };
 
   const handleSubmitPodcast = (event) => {
     event.preventDefault();
-    let { judul, sumber, narasumber, deskripsi, link, image, kategori } =
+    let { judul, sumber, narasumber, deskripsi, link, image, kategori, like } =
       inputPodcast;
 
     if (currentId === -1) {
       axios
-        .post('https://webinar-server-app.herokuapp.com/podcast', {
+        .post('https://webinar-server-new.herokuapp.com/podcast', {
           judul,
           sumber,
           narasumber,
@@ -162,15 +185,15 @@ export const GlobalProvider = (props) => {
           link,
           image,
           kategori,
+          like,
         })
         .then((response) => {
-          console.log(response);
-          setFetchStatus(true);
+          setFetchStatusPodcast(true);
           navigate('/admin/dataPodcast');
         });
     } else {
       axios
-        .put(`https://webinar-server-app.herokuapp.com/podcast/${currentId}`, {
+        .put(`https://webinar-server-new.herokuapp.com/podcast/${currentId}`, {
           judul,
           sumber,
           narasumber,
@@ -178,10 +201,10 @@ export const GlobalProvider = (props) => {
           link,
           image,
           kategori,
+          like,
         })
         .then((response) => {
-          console.log(response);
-          setFetchStatus(true);
+          setFetchStatusPodcast(true);
           navigate('/admin/dataPodcast');
         });
     }
@@ -194,6 +217,7 @@ export const GlobalProvider = (props) => {
       link: '',
       image: '',
       kategori: '',
+      like: [],
     });
   };
 
@@ -208,15 +232,14 @@ export const GlobalProvider = (props) => {
     const id = parseInt(event.target.value);
     setcurrentId(id);
     navigate(`/admin/InputPodcast/edit/${id}`);
-    setFetchStatus(true);
+    setFetchStatusPodcast(true);
   };
 
   const handleDeleteWebinar = (event) => {
     const iddel = parseInt(event.target.value);
     axios
-      .delete(`https://webinar-server-app.herokuapp.com/webinar/${iddel}`)
+      .delete(`https://webinar-server-new.herokuapp.com/webinar/${iddel}`)
       .then((response) => {
-        console.log(response);
         setFetchStatus(true);
       });
   };
@@ -224,14 +247,43 @@ export const GlobalProvider = (props) => {
   const handleDeletePodcast = (event) => {
     const iddel = parseInt(event.target.value);
     axios
-      .delete(`https://webinar-server-app.herokuapp.com/podcast/${iddel}`)
+      .delete(`https://webinar-server-new.herokuapp.com/podcast/${iddel}`)
       .then((response) => {
-        console.log(response);
-        setFetchStatus(true);
+        setFetchStatusPodcast(true);
       });
   };
 
+  const showLocalDate = (date) => {
+    let newDate = new Date(date).toLocaleString('id-ID', {
+      month: 'long',
+      year: 'numeric',
+      day: '2-digit',
+    });
+    return newDate;
+  };
+  const fetchProfile = async () => {
+    try {
+      const localUser = JSON.parse(Cookies.get('user'));
+      const q = query(
+        collection(db, 'users'),
+        where('uid', '==', localUser.uid)
+      );
+      const doc = await getDocs(q);
+      const data = doc.docs[0].data();
+      setProfile(data);
+    } catch (err) {
+      Swal.fire({
+        title: 'Error!',
+        text: 'An error occured while fetching user data',
+        icon: 'error',
+        confirmButtonText: 'OK',
+      });
+    }
+  };
+
   const contextState = {
+    isLoggedIn,
+    setIsLoggedIn,
     arrayWebinar,
     setArrayWebinar,
     arrayPodcast,
@@ -244,6 +296,9 @@ export const GlobalProvider = (props) => {
     setInputWebinar,
     inputPodcast,
     setInputPodcast,
+    profile,
+    setProfile,
+    fetchProfile,
   };
 
   const contextFunctions = {
@@ -257,6 +312,8 @@ export const GlobalProvider = (props) => {
     handleEditPodcast,
     handleDeleteWebinar,
     handleDeletePodcast,
+    showLocalDate,
+    getUID,
   };
 
   return (

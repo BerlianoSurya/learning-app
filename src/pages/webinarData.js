@@ -1,16 +1,19 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { GlobalContext } from '../context/GlobalContext';
-import { useNavigate, Link, useSearchParams } from 'react-router-dom';
-import { Card, Row, Col, Container, Button } from 'react-bootstrap';
 
 const WebinarData = () => {
   let num = 1;
   const { contextState, contextFunctions } = useContext(GlobalContext);
   const { arrayWebinar, setArrayWebinar, fetchStatus, setFetchStatus } =
     contextState;
-  const { renderDataWebinar, handleEditWebinar, handleDeleteWebinar } =
-    contextFunctions;
+  const {
+    renderDataWebinar,
+    handleEditWebinar,
+    handleDeleteWebinar,
+    showLocalDate,
+  } = contextFunctions;
+
   useEffect(() => {
     if (fetchStatus === true) {
       renderDataWebinar();
@@ -19,7 +22,7 @@ const WebinarData = () => {
   return (
     <div className="home container-fluid">
       <div className="">
-        <p>Admin Dashboard</p>
+        <h2 className='fw-bold text-center my-4'>Data Webinar</h2>
         <div className="table-data" id="table-data">
           <table className="table table-hover table-dark table-bordered table-striped">
             <thead>
@@ -40,7 +43,7 @@ const WebinarData = () => {
               </tr>
             </thead>
             <tbody>
-              {arrayWebinar !== null ? (
+              {arrayWebinar.length !== 0 ? (
                 arrayWebinar.map((el) => (
                   <tr key={el.id}>
                     <td>{num++}</td>
@@ -76,7 +79,9 @@ const WebinarData = () => {
                 ))
               ) : (
                 <tr>
-                  <td>Tidak ada data</td>
+                  <td colSpan="12" className="text-center">
+                    Tidak ada data
+                  </td>
                 </tr>
               )}
             </tbody>

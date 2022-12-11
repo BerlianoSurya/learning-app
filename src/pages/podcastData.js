@@ -1,25 +1,23 @@
-import axios from 'axios';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { GlobalContext } from '../context/GlobalContext';
-import { useNavigate, Link, useSearchParams } from 'react-router-dom';
-import { Card, Row, Col, Container, Button } from 'react-bootstrap';
 
 const PodcastData = () => {
   let num = 1;
   const { contextState, contextFunctions } = useContext(GlobalContext);
-  const { arrayPodcast, setArrayWebinar, fetchStatusPodcast, setFetchStatus } =
+  const { arrayPodcast, fetchStatusPodcast, setFetchStatusPodcast } =
     contextState;
   const { renderDataPodcast, handleEditPodcast, handleDeletePodcast } =
     contextFunctions;
+  console.log(arrayPodcast);
   useEffect(() => {
     if (fetchStatusPodcast === true) {
       renderDataPodcast();
     }
-  }, []);
+  }, [fetchStatusPodcast, setFetchStatusPodcast]);
   return (
     <div className="home container-fluid">
       <div className="">
-        <p>Admin Dashboard</p>
+        <h2 className='fw-bold text-center my-4'>Data Podcast</h2>
         <div className="table-data">
           <table className="table table-hover table-dark table-bordered table-striped">
             <thead>
@@ -37,7 +35,7 @@ const PodcastData = () => {
               </tr>
             </thead>
             <tbody>
-              {arrayPodcast !== null ? (
+              {arrayPodcast.length !== 0 ? (
                 arrayPodcast.map((el) => (
                   <tr key={el.id}>
                     <td>{num++}</td>
@@ -70,7 +68,9 @@ const PodcastData = () => {
                 ))
               ) : (
                 <tr>
-                  <td>Tidak ada data</td>
+                  <td colSpan="9" className="text-center">
+                    Tidak ada data
+                  </td>
                 </tr>
               )}
             </tbody>

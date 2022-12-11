@@ -1,9 +1,6 @@
 # Capstone Project App
 
-## API
-The consumable endpoints for this project that have been deployed to heroku:
-* https://webinar-server-app.herokuapp.com/webinar
-* https://webinar-server-app.herokuapp.com/podcast
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 

@@ -1,29 +1,20 @@
 import axios from 'axios';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { GlobalContext } from '../context/GlobalContext';
-import { useNavigate, Link, useParams } from 'react-router-dom';
-import { Card, Row, Col, Container, Button } from 'react-bootstrap';
+import { useParams } from 'react-router-dom';
 import Kategori from '../kategori.json';
 
 const AdminAddDataPodcast = () => {
   let { IdData } = useParams();
   const { contextState, contextFunctions } = useContext(GlobalContext);
-  const {
-    arrayWebinar,
-    inputPodcast,
-    setInputPodcast,
-    fetchStatus,
-    setFetchStatus,
-  } = contextState;
+  const { inputPodcast, setInputPodcast } = contextState;
   const { handleChangePodcast, handleSubmitPodcast } = contextFunctions;
 
   useEffect(() => {
-    console.log(IdData);
     if (IdData !== undefined) {
       axios
-        .get(`https://webinar-server-app.herokuapp.com/podcast/${IdData}`)
+        .get(`https://webinar-server-new.herokuapp.com/podcast/${IdData}`)
         .then((response) => {
-          console.log(response);
           setInputPodcast({
             judul: response.data.judul,
             sumber: response.data.sumber,
@@ -32,14 +23,15 @@ const AdminAddDataPodcast = () => {
             link: response.data.link,
             image: response.data.image,
             kategori: response.data.kategori,
+            like: response.data.like,
           });
         });
     }
   }, []);
   return (
     <div className="home container-fluid">
-      <div className="">
-        <p>Admin Input Data Podcast</p>
+      <div className="container">
+        <h2 className='text-center'>Admin Input Data Podcast</h2>
         <form onSubmit={handleSubmitPodcast} className="row g-3">
           <div className="col-12">
             <label htmlFor="judul" className="form-label">
@@ -118,7 +110,7 @@ const AdminAddDataPodcast = () => {
 
           <div className=" col-md-4">
             <label htmlFor="image" className="form-label">
-              Link foto(link)
+              Link foto
             </label>
             <input
               type="text"
@@ -139,7 +131,7 @@ const AdminAddDataPodcast = () => {
               name="kategori"
               onChange={handleChangePodcast}
               value={inputPodcast.kategori}
-              class="form-control"
+              className="form-control"
             >
               {Kategori.map((e, key) => {
                 return (
