@@ -1,4 +1,10 @@
-# Capstone Project App
+# Capstone Project App 
+https://learningappnew.netlify.app
+
+## Admin Dashboard
+Access https://learningappnew.netlify.app/adminLogin to login as admin with these:
+* Username: admin,
+* Password: 123
 
 ## API
 The consumable endpoints for this project that have been deployed to heroku:
