@@ -37,13 +37,12 @@ const Register = () => {
       });
     } else {
       registerWithEmailAndPassword(name, profile_image, email, password);
-      navigate('/');
     }
   };
 
   return (
     <div className="user d-flex justify-content-center">
-      <div className='user-container'>
+      <div className="user-container">
         <form onSubmit={handleRegister}>
           <h2 className="text-center">Register</h2>
           <div className="form-group">
@@ -83,6 +82,7 @@ const Register = () => {
               value={input.email}
               type="email"
               placeholder="Email"
+              required
             />
           </div>
           <div className="form-group">
@@ -100,7 +100,10 @@ const Register = () => {
           </div>
           <div className="form-group">
             <p className="float-start mt-3 me-2">
-              <Link to="/login">Login </Link>
+              Sudah punya akun?{' '}
+              <Link to="/login">
+                <span className="link-redirect">Login</span>
+              </Link>
             </p>
             <button
               className="btn btn-success rounded-pill float-end mt-3"

@@ -114,6 +114,10 @@
   transform: scale(1.1);
 }
 
+.link-redirect {
+  color: blue;
+}
+
 /* .sticky-col {
   position: -webkit-sticky;
   position: sticky;

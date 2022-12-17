@@ -76,6 +76,10 @@ const registerWithEmailAndPassword = async (
 
     Cookies.set('token', user.accessToken, { expires: 1 });
     Cookies.set('user', JSON.stringify(user), { expires: 1 });
+    setTimeout(() => {
+      window.location.href = '/';
+      // window.location.reload(false);
+    }, '1000');
     return user;
   } catch (err) {
     Swal.fire({
