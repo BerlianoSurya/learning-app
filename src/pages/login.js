@@ -39,10 +39,10 @@ const Login = () => {
   };
   return (
     <div className="user d-flex justify-content-center">
-      <div className='user-container'>
+      <div className="user-container">
         <form onSubmit={handleLogin}>
-          <h2 className='text-center'>Login</h2>
-          <div className='form-group'>
+          <h2 className="text-center">Login</h2>
+          <div className="form-group">
             <label htmlFor="email" className="form-label">
               Email
             </label>
@@ -55,7 +55,7 @@ const Login = () => {
               placeholder="Email"
             />
           </div>
-          <div className='form-group'>
+          <div className="form-group">
             <label htmlFor="password" className="form-label">
               Password
             </label>
@@ -68,7 +68,10 @@ const Login = () => {
               placeholder="Password"
             />
             <p className="float-start mt-3">
-              <Link to="/register">Register</Link>
+              Belum punya akun?{' '}
+              <Link to="/register">
+                <span className="link-redirect">Register</span>
+              </Link>
             </p>
             <button
               className="btn btn-success rounded-pill float-end mt-3"
@@ -80,7 +83,6 @@ const Login = () => {
         </form>
       </div>
     </div>
-
   );
 };
 

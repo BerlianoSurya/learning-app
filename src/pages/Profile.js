@@ -109,15 +109,15 @@ const Profile = () => {
   }, [user, loading]);
 
   return (
-    <div className='user py-4'>
-      <div className='user-container bg-transparent card shadow p-3'>
-        <div className='text-center mb-5'>
-          <h2 className='mb-4'>Profile</h2>
+    <div className="user py-4">
+      <div className="user-container bg-transparent card shadow p-3">
+        <div className="text-center mb-5">
+          <h2 className="mb-4">Profile</h2>
           <img src={profile.profile_image} width="100" />
         </div>
         <h4>Nama: {profile.name}</h4>
         <h4>Email: {profile.email}</h4>
-        <div className='text-end'>
+        <div className="text-end">
           <button
             type="button"
             className="btn btn-warning ms-2"
@@ -173,7 +173,7 @@ const Profile = () => {
                   />
                   <button
                     type="submit"
-                    className="btn btn-primary rounded-pill float-end mt-3"
+                    className="btn btn-warning rounded-pill float-end mt-3"
                   >
                     Simpan
                   </button>
